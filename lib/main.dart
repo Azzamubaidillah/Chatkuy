@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'app/routes/app_pages.dart';
-import 'app/utils/error_page.dart';
-import 'app/utils/loading_page.dart';
+import 'app/utils/error_screen.dart';
+import 'app/utils/loading_screen.dart';
+import 'app/utils/splash_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,20 +22,27 @@ class MyApp extends StatelessWidget {
       builder: (context, snapshot) {
         //check errors
         if (snapshot.hasError) {
-          return ErrorPage();
+          return ErrorScreen();
         }
 
         //one complete, show your applicationId
         if (snapshot.connectionState == ConnectionState.done) {
-          return GetMaterialApp(
-            title: "Chatkuy",
-            initialRoute: AppPages.INITIAL,
-            getPages: AppPages.routes,
-          );
+          return FutureBuilder(
+              future: Future.delayed(Duration(seconds: 3)),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return GetMaterialApp(
+                    title: "Chatkuy",
+                    initialRoute: AppPages.INITIAL,
+                    getPages: AppPages.routes,
+                  );
+                }
+                return SplashScreen();
+              });
         }
 
         //otherwise, show something whilst waiting for initialization to complete
-        return LoadingPage();
+        return LoadingScreen();
       },
     );
   }
