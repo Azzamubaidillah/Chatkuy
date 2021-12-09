@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "871713776728",
+    "project_id": "chatkuy-azzam",
+    "storage_bucket": "chatkuy-azzam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871713776728:android:c083f9c0748fac4d9a162d",
+        "android_client_info": {
+          "package_name": "com.azzam.chatkuy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "871713776728-1jptou08443vucqja839uo7n31iao51p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.azzam.chatkuy",
+            "certificate_hash": "7cd152fe4adfe2b73029232240bfc8163cf00396"
+          }
+        },
+        {
+          "client_id": "871713776728-22d9sg3cro4j3hp1av6m9c9l3pj4jamh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZwb0UPa_4rQRKJwMsQ-mmuuXJCzuR1Bk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "871713776728-22d9sg3cro4j3hp1av6m9c9l3pj4jamh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
