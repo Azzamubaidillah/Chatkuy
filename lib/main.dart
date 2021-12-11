@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           return GetMaterialApp(
             title: "Chatkuy",
-            initialRoute: Routes.HOME,
+            initialRoute: Routes.SEARCH,
             getPages: AppPages.routes,
           );
 
