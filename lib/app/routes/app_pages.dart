@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import 'package:chatkuy/app/modules/change_profile/bindings/change_profile_binding.dart';
+import 'package:chatkuy/app/modules/change_profile/views/change_profile_view.dart';
 import 'package:chatkuy/app/modules/chat_room/bindings/chat_room_binding.dart';
 import 'package:chatkuy/app/modules/chat_room/views/chat_room_view.dart';
 import 'package:chatkuy/app/modules/home/bindings/home_binding.dart';
@@ -55,6 +57,11 @@ class AppPages {
       name: _Paths.UPDATE_STATUS,
       page: () => UpdateStatusView(),
       binding: UpdateStatusBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHANGE_PROFILE,
+      page: () => ChangeProfileView(),
+      binding: ChangeProfileBinding(),
     ),
   ];
 }

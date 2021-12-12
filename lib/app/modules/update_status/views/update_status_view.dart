@@ -10,10 +10,8 @@ class UpdateStatusView extends GetView<UpdateStatusController> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: (){}, 
-          icon: Icon(
-            Icons.arrow_back
-          ),
+          onPressed: () {},
+          icon: Icon(Icons.arrow_back),
         ),
         backgroundColor: Colors.blue[300],
         title: Text('Update Status'),
@@ -62,8 +60,9 @@ class UpdateStatusView extends GetView<UpdateStatusController> {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   padding: EdgeInsets.symmetric(
-                  horizontal: 30,
-                  vertical: 20,
+                    horizontal: 30,
+                    vertical: 20,
+                  ),
                 ),
               ),
             ),
