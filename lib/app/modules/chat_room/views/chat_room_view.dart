@@ -70,6 +70,7 @@ class ChatRoomView extends GetView<ChatRoomController> {
                 Expanded(
                   child: Container(
                     child: TextField(
+                      controller: controller.chatC,
                       focusNode: controller.focusNode,
                       decoration: InputDecoration(
                         prefixIcon: IconButton(
@@ -110,7 +111,7 @@ class ChatRoomView extends GetView<ChatRoomController> {
                     height: 325,
                     child: EmojiPicker(
                       onEmojiSelected: (category, emoji) {
-                        // Do something when emoji is tapped
+                        controller.addEmojiToChat(emoji);
                       },
                       onBackspacePressed: () {
                         // Backspace-Button tapped logic
