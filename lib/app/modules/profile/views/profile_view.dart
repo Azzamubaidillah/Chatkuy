@@ -43,7 +43,6 @@ class ProfileView extends GetView<ProfileController> {
                       margin: EdgeInsets.all(15),
                       width: 175,
                       height: 175,
-                      color: Colors.black38,
                       decoration: BoxDecoration(
                         color: Colors.black38,
                         borderRadius: BorderRadius.circular(100),

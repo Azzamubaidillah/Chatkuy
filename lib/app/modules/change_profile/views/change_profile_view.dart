@@ -23,7 +23,7 @@ class ChangeProfileView extends GetView<ChangeProfileController> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
+        child: ListView(
           children: [
             AvatarGlow(
               endRadius: 75,
@@ -33,7 +33,6 @@ class ChangeProfileView extends GetView<ChangeProfileController> {
                 margin: EdgeInsets.all(15),
                 width: 120,
                 height: 120,
-                color: Colors.black38,
                 decoration: BoxDecoration(
                   color: Colors.black38,
                   borderRadius: BorderRadius.circular(100),
