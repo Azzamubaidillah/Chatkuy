@@ -114,8 +114,7 @@ class ChatRoomView extends GetView<ChatRoomController> {
                         controller.addEmojiToChat(emoji);
                       },
                       onBackspacePressed: () {
-                        // Backspace-Button tapped logic
-                        // Remove this line to also remove the button in the UI
+                        controller.deleteEmoji();
                       },
                       config: Config(
                         columns: 7,
