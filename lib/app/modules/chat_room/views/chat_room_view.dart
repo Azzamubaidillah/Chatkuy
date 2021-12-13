@@ -45,102 +45,112 @@ class ChatRoomView extends GetView<ChatRoomController> {
           ],
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              child: ListView(
+      body: WillPopScope(
+        onWillPop: () {
+          if (controller.isShowEmoji.isTrue) {
+            controller.isShowEmoji.value = false;
+          } else {
+            Navigator.pop(context);
+          }
+          return Future.value(false);
+        },
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                child: ListView(
+                  children: [
+                    itemChat(isSender: true),
+                    itemChat(isSender: false),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                  bottom: controller.isShowEmoji.isTrue
+                      ? 5
+                      : context.mediaQueryPadding.bottom),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              width: Get.width,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  itemChat(isSender: true),
-                  itemChat(isSender: false),
+                  Expanded(
+                    child: Container(
+                      child: TextField(
+                        controller: controller.chatC,
+                        focusNode: controller.focusNode,
+                        decoration: InputDecoration(
+                          prefixIcon: IconButton(
+                            onPressed: () {
+                              controller.focusNode.unfocus();
+                              controller.isShowEmoji.toggle();
+                            },
+                            icon: Icon(Icons.emoji_emotions_outlined),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Material(
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.blue[500],
+                    child: InkWell(
+                      onTap: () {},
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Icon(
+                          Icons.send,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.only(
-                bottom: controller.isShowEmoji.isTrue
-                    ? 5
-                    : context.mediaQueryPadding.bottom),
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            width: Get.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Container(
-                    child: TextField(
-                      controller: controller.chatC,
-                      focusNode: controller.focusNode,
-                      decoration: InputDecoration(
-                        prefixIcon: IconButton(
-                          onPressed: () {
-                            controller.focusNode.unfocus();
-                            controller.isShowEmoji.toggle();
-                          },
-                          icon: Icon(Icons.emoji_emotions_outlined),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(100),
+            Obx(
+              () => (controller.isShowEmoji.isTrue)
+                  ? Container(
+                      height: 325,
+                      child: EmojiPicker(
+                        onEmojiSelected: (category, emoji) {
+                          controller.addEmojiToChat(emoji);
+                        },
+                        onBackspacePressed: () {
+                          controller.deleteEmoji();
+                        },
+                        config: Config(
+                          columns: 7,
+                          emojiSizeMax: 32.0,
+                          verticalSpacing: 0,
+                          horizontalSpacing: 0,
+                          initCategory: Category.RECENT,
+                          bgColor: Color(0xFFF2F2F2),
+                          indicatorColor: Colors.blue,
+                          iconColor: Colors.grey,
+                          iconColorSelected: Colors.blue,
+                          progressIndicatorColor: Colors.blue,
+                          showRecentsTab: true,
+                          recentsLimit: 28,
+                          noRecentsText: "No Recents",
+                          noRecentsStyle: const TextStyle(
+                              fontSize: 20, color: Colors.black26),
+                          tabIndicatorAnimDuration: kTabScrollDuration,
+                          categoryIcons: const CategoryIcons(),
+                          buttonMode: ButtonMode.MATERIAL,
                         ),
                       ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10),
-                Material(
-                  borderRadius: BorderRadius.circular(100),
-                  color: Colors.blue[500],
-                  child: InkWell(
-                    onTap: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Icon(
-                        Icons.send,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                    )
+                  : SizedBox(),
             ),
-          ),
-          Obx(
-            () => (controller.isShowEmoji.isTrue)
-                ? Container(
-                    height: 325,
-                    child: EmojiPicker(
-                      onEmojiSelected: (category, emoji) {
-                        controller.addEmojiToChat(emoji);
-                      },
-                      onBackspacePressed: () {
-                        controller.deleteEmoji();
-                      },
-                      config: Config(
-                        columns: 7,
-                        emojiSizeMax: 32.0,
-                        verticalSpacing: 0,
-                        horizontalSpacing: 0,
-                        initCategory: Category.RECENT,
-                        bgColor: Color(0xFFF2F2F2),
-                        indicatorColor: Colors.blue,
-                        iconColor: Colors.grey,
-                        iconColorSelected: Colors.blue,
-                        progressIndicatorColor: Colors.blue,
-                        showRecentsTab: true,
-                        recentsLimit: 28,
-                        noRecentsText: "No Recents",
-                        noRecentsStyle: const TextStyle(
-                            fontSize: 20, color: Colors.black26),
-                        tabIndicatorAnimDuration: kTabScrollDuration,
-                        categoryIcons: const CategoryIcons(),
-                        buttonMode: ButtonMode.MATERIAL,
-                      ),
-                    ),
-                  )
-                : SizedBox(),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
