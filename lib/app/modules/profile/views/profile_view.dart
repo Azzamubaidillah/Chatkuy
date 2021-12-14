@@ -1,4 +1,6 @@
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:chatkuy/app/controllers/auth_controller.dart';
+import 'package:chatkuy/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -6,6 +8,8 @@ import 'package:get/get.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
+  final authC = Get.find<AuthController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +18,7 @@ class ProfileView extends GetView<ProfileController> {
           elevation: 0,
           backgroundColor: Colors.white,
           leading: IconButton(
-            onPressed: () {},
+            onPressed: () => Get.back(),
             icon: Icon(
               Icons.arrow_back,
               color: Colors.black,
@@ -22,7 +26,7 @@ class ProfileView extends GetView<ProfileController> {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () => authC.logout(),
               icon: Icon(
                 Icons.logout,
                 color: Colors.black,
@@ -77,7 +81,7 @@ class ProfileView extends GetView<ProfileController> {
                 child: Column(
                   children: [
                     ListTile(
-                      onTap: () {},
+                      onTap: () => Get.toNamed(Routes.UPDATE_STATUS),
                       leading: Icon(Icons.note_add_outlined),
                       title: Text(
                         "Update Status",
@@ -88,7 +92,7 @@ class ProfileView extends GetView<ProfileController> {
                       trailing: Icon(Icons.arrow_right),
                     ),
                     ListTile(
-                      onTap: () {},
+                      onTap: () => Get.toNamed(Routes.CHANGE_PROFILE),
                       leading: Icon(Icons.person),
                       title: Text(
                         "Change Profile",
@@ -96,18 +100,18 @@ class ProfileView extends GetView<ProfileController> {
                           fontSize: 22,
                         ),
                       ),
-                      trailing: Text("Light"),
+                      trailing: Icon(Icons.arrow_right),
                     ),
                     ListTile(
                       onTap: () {},
-                      leading: Icon(Icons.note_add_outlined),
+                      leading: Icon(Icons.color_lens),
                       title: Text(
                         "Change Theme",
                         style: TextStyle(
                           fontSize: 22,
                         ),
                       ),
-                      trailing: Icon(Icons.arrow_right),
+                      trailing: Text("Light"),
                     ),
                   ],
                 ),

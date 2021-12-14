@@ -8,9 +8,9 @@ class ChangeProfileController extends GetxController {
 
   @override
   void onInit() {
-    emailC = new TextEditingController(text: "lorem.ipsum@gmail.com");
-    nameC = new TextEditingController(text: "lorem ipsum");
-    statusC = new TextEditingController();
+    emailC = TextEditingController(text: "lorem.ipsum@gmail.com");
+    nameC = TextEditingController(text: "lorem ipsum");
+    statusC = TextEditingController();
     super.onInit();
   }
 

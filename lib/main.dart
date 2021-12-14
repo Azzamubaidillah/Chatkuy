@@ -30,30 +30,24 @@ class MyApp extends StatelessWidget {
 
         //one complete, show your applicationId
         if (snapshot.connectionState == ConnectionState.done) {
-          return GetMaterialApp(
-            title: "Chatkuy",
-            initialRoute: Routes.CHAT_ROOM,
-            getPages: AppPages.routes,
-          );
-
-          // return FutureBuilder(
-          //     future: Future.delayed(Duration(seconds: 3)),
-          //     builder: (context, snapshot) {
-          //       if (snapshot.connectionState == ConnectionState.done) {
-          //         return Obx(
-          //           () => GetMaterialApp(
-          //             title: "Chatkuy",
-          //             initialRoute: authC.isSkipIntro.isTrue
-          //                 ? authC.isAuth.isTrue
-          //                     ? Routes.HOME
-          //                     : Routes.LOGIN
-          //                 : Routes.INTRODUCTION,
-          //             getPages: AppPages.routes,
-          //           ),
-          //         );
-          //       }
-          //       return SplashScreen();
-          //     });
+          return FutureBuilder(
+              future: Future.delayed(Duration(seconds: 3)),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return Obx(
+                    () => GetMaterialApp(
+                      title: "Chatkuy",
+                      initialRoute: authC.isSkipIntro.isTrue
+                          ? authC.isAuth.isTrue
+                              ? Routes.HOME
+                              : Routes.LOGIN
+                          : Routes.INTRODUCTION,
+                      getPages: AppPages.routes,
+                    ),
+                  );
+                }
+                return SplashScreen();
+              });
         }
 
         //otherwise, show something whilst waiting for initialization to complete

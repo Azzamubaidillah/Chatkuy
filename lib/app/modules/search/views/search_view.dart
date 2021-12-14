@@ -44,21 +44,24 @@ class SearchView extends GetView<SearchController> {
           title: Text('Search'),
           centerTitle: true,
           leading: IconButton(
-              onPressed: () => Get.back(), icon: Icon(Icons.arrow_back)),
+            onPressed: () => Get.back(),
+            icon: Icon(Icons.arrow_back),
+          ),
           flexibleSpace: Padding(
             padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
             child: Align(
               alignment: Alignment.bottomCenter,
               child: TextField(
-                cursorColor: Colors.blue[300],
+                controller: controller.searchC,
+                cursorColor: Colors.blue[500],
                 decoration: InputDecoration(
                   fillColor: Colors.white,
                   filled: true,
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide(color: Colors.white, width: 1)),
                   focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide(color: Colors.white, width: 1)),
                   hintText: "Search for a friend",
                   contentPadding: EdgeInsets.symmetric(

@@ -11,7 +11,7 @@ class ChangeProfileView extends GetView<ChangeProfileController> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () => Get.back(),
           icon: Icon(Icons.arrow_back),
         ),
         backgroundColor: Colors.blue[300],
