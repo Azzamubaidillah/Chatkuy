@@ -30,6 +30,14 @@ class MyApp extends StatelessWidget {
 
         //one complete, show your applicationId
         if (snapshot.connectionState == ConnectionState.done) {
+          // return Obx(
+          //   () => GetMaterialApp(
+          //     title: "Chatkuy",
+          //     initialRoute: authC.isAuth.isTrue ? Routes.HOME : Routes.LOGIN,
+          //     getPages: AppPages.routes,
+          //   ),
+          // );
+
           return FutureBuilder(
               future: Future.delayed(Duration(seconds: 3)),
               builder: (context, snapshot) {
