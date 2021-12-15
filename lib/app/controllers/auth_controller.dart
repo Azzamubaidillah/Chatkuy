@@ -1,4 +1,5 @@
 import 'package:chatkuy/app/routes/app_pages.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -11,6 +12,8 @@ class AuthController extends GetxController {
   GoogleSignIn _googleSignIn = GoogleSignIn();
   GoogleSignInAccount? _currentUser;
   UserCredential? userCredential;
+
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<void> firstInitialized() async {
     await autoLogin().then((value) {
@@ -65,11 +68,27 @@ class AuthController extends GetxController {
             .signInWithCredential(credential)
             .then((value) => userCredential = value);
 
+        // simpan status user bahwa sudah pernah login dan tidak akan menampilkan onboarding lagi
         final box = GetStorage();
         if (box.read('skipIntro') != null) {
           box.remove('skipIntro');
         }
-        box.write("skipIntro", true);
+        box.write('skipIntro', true);
+
+        // memasukan data ke firestore
+        CollectionReference users = firestore.collection('users');
+        users.doc(_currentUser!.email).set({
+          "uid": userCredential!.user!.uid,
+          "name": _currentUser!.displayName,
+          "email": _currentUser!.email,
+          "photoUrl": _currentUser!.photoUrl,
+          "status": "",
+          "createdAt":
+              userCredential!.user!.metadata.creationTime!.toIso8601String(),
+          "lastSignInTime":
+              userCredential!.user!.metadata.lastSignInTime!.toIso8601String(),
+          "updatedTime": DateTime.now().toString(),
+        });
 
         isAuth.value = true;
         Get.offAllNamed(Routes.HOME);
