@@ -33,6 +33,7 @@ class AuthController extends GetxController {
   }
 
   Future<bool> skipIntro() async {
+    // kita akan mengubah isSkipIntro => true
     final box = GetStorage();
     if (box.read('skipIntro') != null || box.read('skipIntro') == true) {
       return true;
@@ -41,6 +42,7 @@ class AuthController extends GetxController {
   }
 
   Future<bool> autoLogin() async {
+    // kita akan mengubah isAuth => true => autoLogin
     try {
       final isSignIn = await _googleSignIn.isSignedIn();
       if (isSignIn) {
@@ -58,14 +60,15 @@ class AuthController extends GetxController {
             .signInWithCredential(credential)
             .then((value) => userCredential = value);
 
-        // memasukan data ke firestore
-        CollectionReference users = firestore.collection('users');
+        print("USER CREDENTIAL");
+        print(userCredential);
 
-        final checkuser = await users.doc(_currentUser!.email).get();
+        // masukan data ke firebase...
+        CollectionReference users = firestore.collection('users');
 
         await users.doc(_currentUser!.email).update({
           "lastSignInTime":
-              userCredential!.user!.metadata.lastSignInTime!.toIso8601String()
+              userCredential!.user!.metadata.lastSignInTime!.toIso8601String(),
         });
 
         final currUser = await users.doc(_currentUser!.email).get();
@@ -73,32 +76,30 @@ class AuthController extends GetxController {
 
         user(UsersModel.fromJson(currUserData));
 
-        // user(UsersModel(
-        //   uid: currUserData["uid"],
-        //   name: currUserData["name"],
-        //   keyName: currUserData["keyName"],
-        //   email: currUserData["email"],
-        //   photoUrl: currUserData["photoUrl"],
-        //   status: currUserData["status"],
-        //   creationTime: currUserData["creationTime"],
-        //   lastSignInTime: currUserData["lastSignInTime"],
-        // ));
         return true;
       }
       return false;
     } catch (err) {
-      print(err);
       return false;
     }
   }
 
   Future<void> login() async {
     try {
+      // Ini untuk handle kebocoran data user sebelum login
       await _googleSignIn.signOut();
+
+      // Ini digunakan untuk mendapatkan google account
       await _googleSignIn.signIn().then((value) => _currentUser = value);
+
+      // ini untuk mengecek status login user
       final isSignIn = await _googleSignIn.isSignedIn();
 
       if (isSignIn) {
+        // kondisi login berhasil
+        print("SUDAH BERHASIL LOGIN DENGAN AKUN : ");
+        print(_currentUser);
+
         final googleAuth = await _currentUser!.authentication;
 
         final credential = GoogleAuthProvider.credential(
@@ -110,19 +111,22 @@ class AuthController extends GetxController {
             .signInWithCredential(credential)
             .then((value) => userCredential = value);
 
-        // simpan status user bahwa sudah pernah login dan tidak akan menampilkan onboarding lagi
+        print("USER CREDENTIAL");
+        print(userCredential);
+
+        // simpan status user bahwa sudah pernah login & tidak akan menampilkan introduction kembali
         final box = GetStorage();
         if (box.read('skipIntro') != null) {
           box.remove('skipIntro');
         }
         box.write('skipIntro', true);
 
-        // memasukan data ke firestore
+        // masukan data ke firebase...
         CollectionReference users = firestore.collection('users');
 
         final checkuser = await users.doc(_currentUser!.email).get();
 
-        if (checkuser.data() != null) {
+        if (checkuser.data() == null) {
           await users.doc(_currentUser!.email).set({
             "uid": userCredential!.user!.uid,
             "name": _currentUser!.displayName,
@@ -130,11 +134,11 @@ class AuthController extends GetxController {
             "email": _currentUser!.email,
             "photoUrl": _currentUser!.photoUrl ?? "noimage",
             "status": "",
-            "createdAt":
+            "creationTime":
                 userCredential!.user!.metadata.creationTime!.toIso8601String(),
             "lastSignInTime": userCredential!.user!.metadata.lastSignInTime!
                 .toIso8601String(),
-            "updatedTime": DateTime.now().toString(),
+            "updatedTime": DateTime.now().toIso8601String(),
             "chats": [],
           });
         } else {
@@ -149,21 +153,10 @@ class AuthController extends GetxController {
 
         user(UsersModel.fromJson(currUserData));
 
-        // user(UsersModel(
-        //   uid: currUserData["uid"],
-        //   name: currUserData["name"],
-        //   keyName: currUserData["keyName"],
-        //   email: currUserData["email"],
-        //   photoUrl: currUserData["photoUrl"],
-        //   status: currUserData["status"],
-        //   creationTime: currUserData["creationTime"],
-        //   lastSignInTime: currUserData["lastSignInTime"],
-        // ));
-
         isAuth.value = true;
         Get.offAllNamed(Routes.HOME);
       } else {
-        print("Tidak berhasil login");
+        print("TIDAK BERHASIL LOGIN");
       }
     } catch (error) {
       print(error);
@@ -173,14 +166,15 @@ class AuthController extends GetxController {
   Future<void> logout() async {
     await _googleSignIn.disconnect();
     await _googleSignIn.signOut();
-    Get.toNamed(Routes.LOGIN);
+    Get.offAllNamed(Routes.LOGIN);
   }
 
-  //profile
+  // PROFILE
+
   void changeProfile(String name, String status) {
     String date = DateTime.now().toIso8601String();
 
-    //update firebase
+    // Update firebase
     CollectionReference users = firestore.collection('users');
 
     users.doc(_currentUser!.email).update({
@@ -192,10 +186,10 @@ class AuthController extends GetxController {
       "updatedTime": date,
     });
 
-    //update model
+    // Update model
     user.update((user) {
       user!.name = name;
-      user.keyName = name.substring(0, 1).toLowerCase();
+      user.keyName = name.substring(0, 1).toUpperCase();
       user.status = status;
       user.lastSignInTime =
           userCredential!.user!.metadata.lastSignInTime!.toIso8601String();
@@ -203,16 +197,12 @@ class AuthController extends GetxController {
     });
 
     user.refresh();
-    Get.defaultDialog(
-      title: "Success",
-      middleText: "Change Profile Successfully",
-    );
+    Get.defaultDialog(title: "Success", middleText: "Change Profile success");
   }
 
   void updateStatus(String status) {
     String date = DateTime.now().toIso8601String();
-
-    //update firebase
+    // Update firebase
     CollectionReference users = firestore.collection('users');
 
     users.doc(_currentUser!.email).update({
@@ -222,7 +212,7 @@ class AuthController extends GetxController {
       "updatedTime": date,
     });
 
-    //update model
+    // Update model
     user.update((user) {
       user!.status = status;
       user.lastSignInTime =
@@ -231,50 +221,112 @@ class AuthController extends GetxController {
     });
 
     user.refresh();
-    Get.defaultDialog(
-      title: "Success",
-      middleText: "Update Status Successfully",
-    );
+    Get.defaultDialog(title: "Success", middleText: "Update status success");
   }
 
-  addNewConnection(String friendEmail) async {
-    CollectionReference users = firestore.collection("users");
-    CollectionReference chats = firestore.collection("chats");
+  // SEARCH
+
+  void addNewConnection(String friendEmail) async {
+    bool flagNewConnection = false;
+    var chat_id;
     String date = DateTime.now().toIso8601String();
+    CollectionReference chats = firestore.collection("chats");
+    CollectionReference users = firestore.collection("users");
 
-    final newChatDoc = await chats.add({
-      "connections": [
-        _currentUser!.email,
-        friendEmail,
-      ],
-      "total_chats": 0,
-      "total_read": 0,
-      "total_uunread": 0,
-      "chat": [],
-      "lastTime": date,
-    });
+    final docUser = await users.doc(_currentUser!.email).get();
+    final docChats = (docUser.data() as Map<String, dynamic>)["chats"] as List;
 
-    users.doc(_currentUser!.email).update({
-      "chat": [
-        {
+    if (docChats.length != 0) {
+      // user sudah pernah chat dengan siapapun
+
+      docChats.forEach((singleChat) {
+        if (singleChat["connection"] == friendEmail) {
+          chat_id = singleChat["chat_id"];
+        }
+      });
+
+      if (chat_id != null) {
+        // sudah pernah buat koneksi dengan => friendEmail
+        flagNewConnection = false;
+      } else {
+        // blm pernah buat koneksi dengan => friendEmail
+        // buat koneksi ....
+        flagNewConnection = true;
+      }
+    } else {
+      // blm pernah chat dengan siapapun
+      // buat koneksi ....
+      flagNewConnection = true;
+    }
+
+    if (flagNewConnection) {
+      // cek dari chats collection => connections => mereka berdua...
+      final chatsDocs = await chats.where(
+        "connections",
+        whereIn: [
+          [
+            _currentUser!.email,
+            friendEmail,
+          ],
+          [
+            friendEmail,
+            _currentUser!.email,
+          ],
+        ],
+      ).get();
+
+      if (chatsDocs.docs.length != 0) {
+        // terdapat data chats (sudah ada koneksi antara mereka berdua)
+        final chatDataId = chatsDocs.docs[0].id;
+        final chatsData = chatsDocs.docs[0].data() as Map<String, dynamic>;
+
+        docChats.add({
+          "connection": friendEmail,
+          "chat_id": chatDataId,
+          "lastTime": chatsData["lastTime"],
+          "total_unread": 0,
+        });
+
+        await users.doc(_currentUser!.email).update({"chats": docChats});
+
+        user.update((user) {
+          user!.chats = docChats as List<Chat>;
+        });
+
+        chat_id = chatDataId;
+
+        user.refresh();
+      } else {
+        // buat baru , mereka berdua benar2 belum ada koneksi
+        final newChatDoc = await chats.add({
+          "connections": [
+            _currentUser!.email,
+            friendEmail,
+          ],
+          "chat": [],
+        });
+
+        docChats.add({
           "connection": friendEmail,
           "chat_id": newChatDoc.id,
           "lastTime": date,
-        }
-      ]
-    });
+          "total_unread": 0,
+        });
 
-    user.update((user) {
-      user!.chats = [
-        Chat(
-          chatId: newChatDoc.id,
-          connection: friendEmail,
-          lastTime: date,
-        )
-      ];
-    });
+        await users.doc(_currentUser!.email).update({"chats": docChats});
 
-    user.refresh();
-    Get.toNamed(Routes.CHAT_ROOM);
+        user.update((user) {
+          user!.chats = docChats as List<Chat>;
+        });
+
+        chat_id = newChatDoc.id;
+
+        user.refresh();
+      }
+    }
+
+    print(chat_id);
+
+    Get.toNamed(Routes.CHAT_ROOM, arguments: chat_id);
   }
 }
