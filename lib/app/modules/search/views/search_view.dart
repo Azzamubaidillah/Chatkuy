@@ -88,16 +88,16 @@ class SearchView extends GetView<SearchController> {
                     backgroundColor: Colors.black26,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
-                      // child:
-                      //     controller.tempSearch[index]["photoUrl"] == "noimage"
-                      //         ? Image.asset(
-                      //             "assets/logo/noimage.png",
-                      //             fit: BoxFit.cover,
-                      //           )
-                      //         : Image.network(
-                      //             controller.tempSearch[index]["photoUrl"],
-                      //             fit: BoxFit.cover,
-                      //           ),
+                      child:
+                          controller.tempSearch[index]["photoUrl"] == "noimage"
+                              ? Image.asset(
+                                  "assets/logo/noimage.png",
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.network(
+                                  controller.tempSearch[index]["photoUrl"],
+                                  fit: BoxFit.cover,
+                                ),
                     ),
                   ),
                   title: Text(
