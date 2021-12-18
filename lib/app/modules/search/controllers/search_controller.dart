@@ -24,6 +24,7 @@ class SearchController extends GetxController {
         CollectionReference users = await firestore.collection("users");
         final keyNameResult = await users
             .where("keyName", isEqualTo: data.substring(0, 1).toUpperCase())
+            .where("email", isNotEqualTo: email)
             .get();
 
         print("Total Data: ${keyNameResult.docs.length}");

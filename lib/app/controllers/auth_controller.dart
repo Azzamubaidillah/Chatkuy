@@ -63,7 +63,7 @@ class AuthController extends GetxController {
 
         final checkuser = await users.doc(_currentUser!.email).get();
 
-        users.doc(_currentUser!.email).update({
+        await users.doc(_currentUser!.email).update({
           "lastSignInTime":
               userCredential!.user!.metadata.lastSignInTime!.toIso8601String()
         });
@@ -71,16 +71,18 @@ class AuthController extends GetxController {
         final currUser = await users.doc(_currentUser!.email).get();
         final currUserData = currUser.data() as Map<String, dynamic>;
 
-        user(UsersModel(
-          uid: currUserData["uid"],
-          name: currUserData["name"],
-          keyName: currUserData["keyName"],
-          email: currUserData["email"],
-          photoUrl: currUserData["photoUrl"],
-          status: currUserData["status"],
-          creationTime: currUserData["creationTime"],
-          lastSignInTime: currUserData["lastSignInTime"],
-        ));
+        user(UsersModel.fromJson(currUserData));
+
+        // user(UsersModel(
+        //   uid: currUserData["uid"],
+        //   name: currUserData["name"],
+        //   keyName: currUserData["keyName"],
+        //   email: currUserData["email"],
+        //   photoUrl: currUserData["photoUrl"],
+        //   status: currUserData["status"],
+        //   creationTime: currUserData["creationTime"],
+        //   lastSignInTime: currUserData["lastSignInTime"],
+        // ));
         return true;
       }
       return false;
@@ -121,7 +123,7 @@ class AuthController extends GetxController {
         final checkuser = await users.doc(_currentUser!.email).get();
 
         if (checkuser.data() != null) {
-          users.doc(_currentUser!.email).set({
+          await users.doc(_currentUser!.email).set({
             "uid": userCredential!.user!.uid,
             "name": _currentUser!.displayName,
             "keyName": _currentUser!.displayName!.substring(0, 1).toUpperCase(),
@@ -133,9 +135,10 @@ class AuthController extends GetxController {
             "lastSignInTime": userCredential!.user!.metadata.lastSignInTime!
                 .toIso8601String(),
             "updatedTime": DateTime.now().toString(),
+            "chats": [],
           });
         } else {
-          users.doc(_currentUser!.email).update({
+          await users.doc(_currentUser!.email).update({
             "lastSignInTime": userCredential!.user!.metadata.lastSignInTime!
                 .toIso8601String(),
           });
@@ -144,16 +147,18 @@ class AuthController extends GetxController {
         final currUser = await users.doc(_currentUser!.email).get();
         final currUserData = currUser.data() as Map<String, dynamic>;
 
-        user(UsersModel(
-          uid: currUserData["uid"],
-          name: currUserData["name"],
-          keyName: currUserData["keyName"],
-          email: currUserData["email"],
-          photoUrl: currUserData["photoUrl"],
-          status: currUserData["status"],
-          creationTime: currUserData["creationTime"],
-          lastSignInTime: currUserData["lastSignInTime"],
-        ));
+        user(UsersModel.fromJson(currUserData));
+
+        // user(UsersModel(
+        //   uid: currUserData["uid"],
+        //   name: currUserData["name"],
+        //   keyName: currUserData["keyName"],
+        //   email: currUserData["email"],
+        //   photoUrl: currUserData["photoUrl"],
+        //   status: currUserData["status"],
+        //   creationTime: currUserData["creationTime"],
+        //   lastSignInTime: currUserData["lastSignInTime"],
+        // ));
 
         isAuth.value = true;
         Get.offAllNamed(Routes.HOME);
