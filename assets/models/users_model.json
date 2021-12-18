@@ -1,0 +1,24 @@
+{
+    "uid":"F4VifFRBsTQ7p7RlJSCxdEYDgTg1",
+    "name":"Azzam Ubaidillah",
+    "keyName":"A",
+    "email":"Azzam.ubaiudillah@gmail.com",
+    "creationTime":"2021-12-14T23:03:04.448",
+    "lastSignInTime" :"2021-12-18T12:35:44.517",
+    "photoUrl" :"https://lh3.googleusercontent.com/a/AATXAJxJH5XminaSeuCI_nhEO5L3vzdt368gfrnxhaG_=s96-c",
+    "status" :"Ini status",
+    "updatedTime" : "2021-12-18T12:36:36.504334",
+    "chats": [
+        {
+            "connection" :"bintang.amanda@gmail.com",
+            "chat_id": "jybAs7P5vbV3SJlRhGwz",
+            "lastTime": "2021-12-18T12:36:36.504334"
+        },
+        {
+            "connection" :"marisah.aliwijaya@gmail.com",
+            "chat_id": "jybAs7P5vbV3SJlRhGwz",
+            "lastTime": "2021-12-18T12:36:36.504334"
+
+        }
+    ]
+}

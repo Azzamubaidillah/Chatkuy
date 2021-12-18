@@ -1,4 +1,4 @@
-import 'package:chatkuy/app/data/models/user_model.dart';
+import 'package:chatkuy/app/data/models/users_model.dart';
 import 'package:chatkuy/app/routes/app_pages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,7 +14,7 @@ class AuthController extends GetxController {
   GoogleSignInAccount? _currentUser;
   UserCredential? userCredential;
 
-  var user = UserModel().obs;
+  var user = UsersModel().obs;
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -71,9 +71,10 @@ class AuthController extends GetxController {
         final currUser = await users.doc(_currentUser!.email).get();
         final currUserData = currUser.data() as Map<String, dynamic>;
 
-        user(UserModel(
+        user(UsersModel(
           uid: currUserData["uid"],
           name: currUserData["name"],
+          keyName: currUserData["keyName"],
           email: currUserData["email"],
           photoUrl: currUserData["photoUrl"],
           status: currUserData["status"],
@@ -123,6 +124,7 @@ class AuthController extends GetxController {
           users.doc(_currentUser!.email).set({
             "uid": userCredential!.user!.uid,
             "name": _currentUser!.displayName,
+            "keyName": _currentUser!.displayName!.substring(0, 1).toUpperCase(),
             "email": _currentUser!.email,
             "photoUrl": _currentUser!.photoUrl ?? "noimage",
             "status": "",
@@ -142,9 +144,10 @@ class AuthController extends GetxController {
         final currUser = await users.doc(_currentUser!.email).get();
         final currUserData = currUser.data() as Map<String, dynamic>;
 
-        user(UserModel(
+        user(UsersModel(
           uid: currUserData["uid"],
           name: currUserData["name"],
+          keyName: currUserData["keyName"],
           email: currUserData["email"],
           photoUrl: currUserData["photoUrl"],
           status: currUserData["status"],
@@ -177,6 +180,7 @@ class AuthController extends GetxController {
 
     users.doc(_currentUser!.email).update({
       "name": name,
+      "keyName": name.substring(0, 1).toUpperCase(),
       "status": status,
       "lastSignInTime":
           userCredential!.user!.metadata.lastSignInTime!.toIso8601String(),
@@ -186,6 +190,7 @@ class AuthController extends GetxController {
     //update model
     user.update((user) {
       user!.name = name;
+      user.keyName = name.substring(0, 1).toLowerCase();
       user.status = status;
       user.lastSignInTime =
           userCredential!.user!.metadata.lastSignInTime!.toIso8601String();
@@ -226,4 +231,6 @@ class AuthController extends GetxController {
       middleText: "Update Status Successfully",
     );
   }
+
+  addNewConnection(tempSearch) {}
 }
