@@ -3,16 +3,13 @@
         "azzam.ubaidillah05@gmail.com",
         "bintang.amanda@gmail.com"
     ],
-    "total_chats":10,
-    "total_read":8,
-    "total_unread":2,
     "chat":[
         {
             "pengirim": "azzam.ubaidillah05@gmail.com", 
             "penerima": "bintang.amanda@gmail.com",
             "pesan": "Hai",
             "time": "2021-08-25T13:28:59.748721",
-            "isRead":true
+            "isRead":true   
         },
         {
             "pengirim": "bintang.amanda@gmail.com",
@@ -21,7 +18,5 @@
             "time": "2021-08-25T13:29:59.748721",
             "isRead":true
         }
-    ],
-    "lastTime": "2021-08-25T13:29:59.748721"
-
+    ]
 }

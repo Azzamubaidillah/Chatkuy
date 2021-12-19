@@ -12,13 +12,14 @@
         {
             "connection" :"bintang.amanda@gmail.com",
             "chat_id": "jybAs7P5vbV3SJlRhGwz",
-            "lastTime": "2021-12-18T12:36:36.504334"
+            "lastTime": "2021-12-18T12:36:36.504334",
+            "total_unread": 0
         },
         {
             "connection" :"marisah.aliwijaya@gmail.com",
             "chat_id": "jybAs7P5vbV3SJlRhGwz",
-            "lastTime": "2021-12-18T12:36:36.504334"
-
+            "lastTime": "2021-12-18T12:36:36.504334",
+            "total_unread": 0
         }
     ]
 }
