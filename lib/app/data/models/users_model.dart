@@ -32,19 +32,18 @@ class UsersModel {
   String? photoUrl;
   String? status;
   String? updatedTime;
-  List<Chat>? chats;
+  List<ChatUser>? chats;
 
   factory UsersModel.fromJson(Map<String, dynamic> json) => UsersModel(
         uid: json["uid"],
         name: json["name"],
         keyName: json["keyName"],
         email: json["email"],
-        creationTime: json["createtionTime"],
+        creationTime: json["creationTime"],
         lastSignInTime: json["lastSignInTime"],
         photoUrl: json["photoUrl"],
         status: json["status"],
         updatedTime: json["updatedTime"],
-        chats: List<Chat>.from(json["chats"].map((x) => Chat.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -52,17 +51,16 @@ class UsersModel {
         "name": name,
         "keyName": keyName,
         "email": email,
-        "createtionTime": creationTime,
+        "creationTime": creationTime,
         "lastSignInTime": lastSignInTime,
         "photoUrl": photoUrl,
         "status": status,
         "updatedTime": updatedTime,
-        "chats": List<dynamic>.from(chats!.map((x) => x.toJson())),
       };
 }
 
-class Chat {
-  Chat({
+class ChatUser {
+  ChatUser({
     this.connection,
     this.chatId,
     this.lastTime,
@@ -74,7 +72,7 @@ class Chat {
   String? lastTime;
   int? total_unread;
 
-  factory Chat.fromJson(Map<String, dynamic> json) => Chat(
+  factory ChatUser.fromJson(Map<String, dynamic> json) => ChatUser(
         connection: json["connection"],
         chatId: json["chat_id"],
         lastTime: json["lastTime"],
@@ -84,7 +82,7 @@ class Chat {
   Map<String, dynamic> toJson() => {
         "connection": connection,
         "chat_id": chatId,
-        "lastTime": lastTime!,
-        "total_unread": total_unread!,
+        "lastTime": lastTime,
+        "total_unread": total_unread,
       };
 }
