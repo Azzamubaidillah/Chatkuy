@@ -17,7 +17,7 @@ class UpdateStatusView extends GetView<UpdateStatusController> {
           onPressed: () => Get.back(),
           icon: Icon(Icons.arrow_back),
         ),
-        backgroundColor: Colors.blue[300],
+        backgroundColor: Color(0xFF4B7BEC),
         title: Text('Update Status'),
         centerTitle: true,
       ),
@@ -66,7 +66,7 @@ class UpdateStatusView extends GetView<UpdateStatusController> {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.blue[300],
+                  primary: Color(0xFF4B7BEC),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(100),
                   ),

@@ -20,7 +20,7 @@ class ChangeProfileView extends GetView<ChangeProfileController> {
           onPressed: () => Get.back(),
           icon: Icon(Icons.arrow_back),
         ),
-        backgroundColor: Colors.blue[300],
+        backgroundColor: Color(0xFF4B7BEC),
         title: Text('Update Status'),
         centerTitle: true,
         actions: [
@@ -165,7 +165,7 @@ class ChangeProfileView extends GetView<ChangeProfileController> {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.blue[300],
+                  primary: Color(0xFF4B7BEC),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(100),
                   ),

@@ -25,20 +25,20 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ),
               ),
-              padding: EdgeInsets.fromLTRB(20, 30, 20, 20),
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Chats",
+                    "Chatkuy",
                     style: TextStyle(
-                      fontSize: 35,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Material(
                     borderRadius: BorderRadius.circular(50),
-                    color: Colors.red[900],
+                    color: Color(0xFF4B7BEC),
                     child: InkWell(
                       borderRadius: BorderRadius.circular(50),
                       onTap: () => Get.toNamed(Routes.PROFILE),
@@ -114,7 +114,7 @@ class HomeView extends GetView<HomeController> {
                                             0
                                         ? SizedBox()
                                         : Chip(
-                                            backgroundColor: Colors.red[900],
+                                            backgroundColor: Color(0xFF4B7BEC),
                                             label: Text(
                                               "${listDocsChats[index]["total_unread"]}",
                                               style: TextStyle(
@@ -168,7 +168,7 @@ class HomeView extends GetView<HomeController> {
                                             0
                                         ? SizedBox()
                                         : Chip(
-                                            backgroundColor: Colors.red[900],
+                                            backgroundColor: Color(0xFF4B7BEC),
                                             label: Text(
                                               "${listDocsChats[index]["total_unread"]}",
                                               style: TextStyle(
@@ -199,7 +199,7 @@ class HomeView extends GetView<HomeController> {
           Icons.search,
           size: 30,
         ),
-        backgroundColor: Colors.red[900],
+        backgroundColor: Color(0xFF4B7BEC),
       ),
     );
   }

@@ -13,7 +13,7 @@ class SearchView extends GetView<SearchController> {
     return Scaffold(
       appBar: PreferredSize(
         child: AppBar(
-          backgroundColor: Colors.red[900],
+          backgroundColor: Color(0xFF4B7BEC),
           title: Text('Search'),
           centerTitle: true,
           leading: IconButton(
@@ -30,7 +30,7 @@ class SearchView extends GetView<SearchController> {
                   authC.user.value.email!,
                 ),
                 controller: controller.searchC,
-                cursorColor: Colors.red[900],
+                cursorColor: Color(0xFF4B7BEC),
                 decoration: InputDecoration(
                   fillColor: Colors.white,
                   filled: true,
@@ -58,7 +58,7 @@ class SearchView extends GetView<SearchController> {
                     onTap: () {},
                     child: Icon(
                       Icons.search,
-                      color: Colors.red[900],
+                      color: Color(0xFF4B7BEC),
                     ),
                   ),
                 ),

@@ -35,12 +35,15 @@ class LoginView extends GetView<LoginController> {
                       SizedBox(width: 15),
                       Text(
                         "Sign in with Google",
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Color(0xFF4B7BEC),
+                        ),
                       ),
                     ],
                   ),
                   style: ElevatedButton.styleFrom(
-                      primary: Colors.red[900],
+                      primary: Color(0xFFFFFFFF),
                       padding: EdgeInsets.symmetric(
                         vertical: 12,
                       ),
