@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:chatkuy/app/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
@@ -12,26 +14,27 @@ class ChangeProfileView extends GetView<ChangeProfileController> {
   @override
   Widget build(BuildContext context) {
     controller.emailC.text = authC.user.value.email!;
-    controller.statusC.text = authC.user.value.status!;
     controller.nameC.text = authC.user.value.name!;
+    controller.statusC.text = authC.user.value.status!;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => Get.back(),
           icon: Icon(Icons.arrow_back),
         ),
-        backgroundColor: Color(0xFF4B7BEC),
-        title: Text('Update Status'),
+        backgroundColor: Colors.red[900],
+        title: Text('Change Profile'),
         centerTitle: true,
         actions: [
           IconButton(
-              onPressed: () {
-                authC.changeProfile(
-                  controller.nameC.text,
-                  controller.statusC.text,
-                );
-              },
-              icon: Icon(Icons.save)),
+            onPressed: () {
+              authC.changeProfile(
+                controller.nameC.text,
+                controller.statusC.text,
+              );
+            },
+            icon: Icon(Icons.save),
+          ),
         ],
       ),
       body: Padding(
@@ -48,10 +51,12 @@ class ChangeProfileView extends GetView<ChangeProfileController> {
                 height: 120,
                 child: Obx(
                   () => ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: authC.user.value.photoUrl == "noimage"
-                        ? Image.asset("assets/logo/noimage.png",
-                            fit: BoxFit.cover)
+                    borderRadius: BorderRadius.circular(200),
+                    child: authC.user.value.photoUrl! == "noimage"
+                        ? Image.asset(
+                            "assets/logo/noimage.png",
+                            fit: BoxFit.cover,
+                          )
                         : Image.network(
                             authC.user.value.photoUrl!,
                             fit: BoxFit.cover,
@@ -60,9 +65,11 @@ class ChangeProfileView extends GetView<ChangeProfileController> {
                 ),
               ),
             ),
+            SizedBox(height: 20),
             TextField(
               controller: controller.emailC,
               readOnly: true,
+              textInputAction: TextInputAction.next,
               cursorColor: Colors.black,
               decoration: InputDecoration(
                 labelText: "Email",
@@ -84,6 +91,7 @@ class ChangeProfileView extends GetView<ChangeProfileController> {
             SizedBox(height: 10),
             TextField(
               controller: controller.nameC,
+              textInputAction: TextInputAction.next,
               cursorColor: Colors.black,
               decoration: InputDecoration(
                 labelText: "Name",
@@ -136,18 +144,69 @@ class ChangeProfileView extends GetView<ChangeProfileController> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("data"),
+                  GetBuilder<ChangeProfileController>(
+                    builder: (c) => c.pickedImage != null
+                        ? Column(
+                            children: [
+                              Container(
+                                height: 110,
+                                width: 125,
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      height: 100,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        image: DecorationImage(
+                                          image: FileImage(
+                                            File(c.pickedImage!.path),
+                                          ),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: -10,
+                                      right: -5,
+                                      child: IconButton(
+                                        onPressed: () => c.resetImage(),
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: Colors.red[900],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  "upload",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : Text("no image"),
+                  ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () => controller.selectImage(),
                     child: Text(
-                      "pilih foto...",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      "chosen",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 30),
             Container(
               width: Get.width,
               child: ElevatedButton(
@@ -158,14 +217,14 @@ class ChangeProfileView extends GetView<ChangeProfileController> {
                   );
                 },
                 child: Text(
-                  "Update",
+                  "UPDATE",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF4B7BEC),
+                  primary: Colors.red[900],
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(100),
                   ),
