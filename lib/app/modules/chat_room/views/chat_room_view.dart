@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../controllers/chat_room_controller.dart';
 
@@ -15,7 +16,7 @@ class ChatRoomView extends GetView<ChatRoomController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF4B7BEC),
+        backgroundColor: Colors.red[900],
         leadingWidth: 100,
         leading: InkWell(
           onTap: () => Get.back(),
@@ -144,14 +145,60 @@ class ChatRoomView extends GetView<ChatRoomController> {
                       return ListView.builder(
                         controller: controller.scrollC,
                         itemCount: alldata.length,
-                        itemBuilder: (context, index) => ItemChat(
-                          msg: "${alldata[index]["msg"]}",
-                          isSender: alldata[index]["pengirim"] ==
-                                  authC.user.value.email!
-                              ? true
-                              : false,
-                          time: "${alldata[index]["time"]}",
-                        ),
+                        itemBuilder: (context, index) {
+                          if (index == 0) {
+                            return Column(
+                              children: [
+                                SizedBox(height: 10),
+                                Text(
+                                  "${alldata[index]["groupTime"]}",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                ItemChat(
+                                  msg: "${alldata[index]["msg"]}",
+                                  isSender: alldata[index]["pengirim"] ==
+                                          authC.user.value.email!
+                                      ? true
+                                      : false,
+                                  time: "${alldata[index]["time"]}",
+                                ),
+                              ],
+                            );
+                          } else {
+                            if (alldata[index]["groupTime"] ==
+                                alldata[index - 1]["groupTime"]) {
+                              return ItemChat(
+                                msg: "${alldata[index]["msg"]}",
+                                isSender: alldata[index]["pengirim"] ==
+                                        authC.user.value.email!
+                                    ? true
+                                    : false,
+                                time: "${alldata[index]["time"]}",
+                              );
+                            } else {
+                              return Column(
+                                children: [
+                                  Text(
+                                    "${alldata[index]["groupTime"]}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  ItemChat(
+                                    msg: "${alldata[index]["msg"]}",
+                                    isSender: alldata[index]["pengirim"] ==
+                                            authC.user.value.email!
+                                        ? true
+                                        : false,
+                                    time: "${alldata[index]["time"]}",
+                                  ),
+                                ],
+                              );
+                            }
+                          }
+                        },
                       );
                     }
                     return Center(child: CircularProgressIndicator());
@@ -199,7 +246,7 @@ class ChatRoomView extends GetView<ChatRoomController> {
                   SizedBox(width: 10),
                   Material(
                     borderRadius: BorderRadius.circular(100),
-                    color: Color(0xFF4B7BEC),
+                    color: Colors.red[900],
                     child: InkWell(
                       borderRadius: BorderRadius.circular(100),
                       onTap: () => controller.newChat(
@@ -286,7 +333,7 @@ class ItemChat extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: isSender ? Colors.blue[300] : Colors.green[300],
+              color: Colors.red[900],
               borderRadius: isSender
                   ? BorderRadius.only(
                       topLeft: Radius.circular(15),
@@ -308,7 +355,7 @@ class ItemChat extends StatelessWidget {
             ),
           ),
           SizedBox(height: 5),
-          Text(time),
+          Text(DateFormat.jm().format(DateTime.parse(time))),
         ],
       ),
       alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
