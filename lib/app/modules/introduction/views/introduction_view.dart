@@ -25,7 +25,7 @@ class IntroductionView extends GetView<IntroductionController> {
             ),
             Spacer(flex: 2),
             Text(
-              "Welcome to Chatkuy",
+              "Welcome to our Chatkuy\nmessaging app",
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
@@ -34,7 +34,7 @@ class IntroductionView extends GetView<IntroductionController> {
             ),
             Spacer(),
             Text(
-              "Reliable chat apps for student",
+              "Simple and reliable chat apps\nfor student",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Theme.of(context)
