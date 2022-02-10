@@ -1,4 +1,5 @@
 import 'package:chatkuy/app/controllers/auth_controller.dart';
+import 'package:chatkuy/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
 
           return GetMaterialApp(
             title: "Chatkuy",
+            debugShowCheckedModeBanner: false,
+            theme: lightThemeData(context),
+            darkTheme: darkThemeData(context),
             initialRoute: Routes.INTRODUCTION,
             getPages: AppPages.routes,
           );
