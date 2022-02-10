@@ -33,5 +33,6 @@ flutter:
   assets: 
     - assets/lottie/
     - assets/logo/
+    - assets/image/
   uses-material-design: true
 

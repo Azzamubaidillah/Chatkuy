@@ -1,4 +1,5 @@
 import 'package:chatkuy/app/routes/app_pages.dart';
+import 'package:chatkuy/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -11,66 +12,69 @@ class IntroductionView extends GetView<IntroductionController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IntroductionScreen(
-        pages: [
-          PageViewModel(
-            title: "Berinteraksi dengan mudah",
-            body: "Kamu hanya perlu dirumah saja untuk mendapatkan teman baru.",
-            image: Container(
-              width: Get.width * 0.6,
-              height: Get.width * 0.6,
-              child: Center(
-                child: Lottie.asset("assets/lottie/main-laptop-duduk.json"),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Spacer(flex: 2),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: kDefaultPadding * 2),
+              child: Image.asset(
+                "assets/image/welcome.png",
               ),
             ),
-          ),
-          PageViewModel(
-            title: "Temukan sahabat barumu",
-            body:
-                "Jika kamu memang jodoh karena aplikasi ini, kami sangat bahagia.",
-            image: Container(
-              width: Get.width * 0.6,
-              height: Get.width * 0.6,
-              child: Center(
-                child: Lottie.asset("assets/lottie/ojek.json"),
+            Spacer(flex: 2),
+            Text(
+              "Welcome to Chatkuy",
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5!
+                  .copyWith(fontWeight: FontWeight.bold),
+            ),
+            Spacer(),
+            Text(
+              "Reliable chat apps for student",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Theme.of(context)
+                    .textTheme
+                    .bodyText1!
+                    .color!
+                    .withOpacity(0.64),
               ),
             ),
-          ),
-          PageViewModel(
-            title: "Aplikasi bebas biaya",
-            body:
-                "Kamu tidak perlu khawatir, aplikasi ini bebas biaya apapun..",
-            image: Container(
-              width: Get.width * 0.6,
-              height: Get.width * 0.6,
-              child: Center(
-                child: Lottie.asset("assets/lottie/payment.json"),
+            Spacer(flex: 2),
+            FittedBox(
+              child: TextButton(
+                onPressed: () {},
+                child: Row(
+                  children: [
+                    Text(
+                      "Skip",
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          color: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .color!
+                              .withOpacity(0.8)),
+                    ),
+                    SizedBox(width: kDefaultPadding / 4),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 16,
+                      color: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .color!
+                          .withOpacity(0.8),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          PageViewModel(
-            title: "Gabung sekarang juga",
-            body:
-                "Daftarkan diri kamu, untuk jadi bagian dari kami. Kami akan menghubungkanmu dengan 1000 orang lainnya",
-            image: Container(
-              width: Get.width * 0.6,
-              height: Get.width * 0.6,
-              child: Center(
-                child: Lottie.asset("assets/lottie/register.json"),
-              ),
-            ),
-          ),
-        ],
-        onDone: () => Get.offAllNamed(Routes.LOGIN),
-        showSkipButton: true,
-        skip: Text("Skip"),
-        next: Text(
-          "Next",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        done: Text(
-          "Login",
-          style: TextStyle(fontWeight: FontWeight.w600),
+            Spacer(flex: 3),
+          ],
         ),
       ),
     );
