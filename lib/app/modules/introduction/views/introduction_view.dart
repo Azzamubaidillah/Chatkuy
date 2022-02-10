@@ -47,7 +47,7 @@ class IntroductionView extends GetView<IntroductionController> {
             Spacer(flex: 2),
             FittedBox(
               child: TextButton(
-                onPressed: () {},
+                onPressed: () => Get.offNamed(Routes.LOGIN),
                 child: Row(
                   children: [
                     Text(
