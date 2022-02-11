@@ -1,6 +1,7 @@
 import 'package:chatkuy/app/controllers/auth_controller.dart';
 import 'package:chatkuy/app/routes/app_pages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -157,13 +158,14 @@ class HomeView extends GetView<HomeController> {
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
-                                    subtitle: Text(
-                                      "${data["status"]}",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
+                                    subtitle: Text("${data["status"]}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle2!
+                                            .copyWith(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w300,
+                                            )),
                                     trailing: listDocsChats[index]
                                                 ["total_unread"] ==
                                             0
@@ -197,7 +199,8 @@ class HomeView extends GetView<HomeController> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed(Routes.SEARCH),
         child: Icon(
-          Icons.search,
+          CupertinoIcons.search,
+          color: Colors.white,
           size: 30,
         ),
         backgroundColor: Color(0xFF4B7BEC),
@@ -209,7 +212,11 @@ class HomeView extends GetView<HomeController> {
     return AppBar(
       automaticallyImplyLeading: false,
       title: Text("Chats"),
-      actions: [IconButton(onPressed: () {}, icon: Icon(Icons.info_outline))],
+      actions: [
+        IconButton(
+            onPressed: () => Get.toNamed(Routes.PROFILE),
+            icon: Icon(CupertinoIcons.person))
+      ],
     );
   }
 }
