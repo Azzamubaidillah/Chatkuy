@@ -1,5 +1,8 @@
 import 'package:chatkuy/app/controllers/auth_controller.dart';
+import 'package:chatkuy/app/modules/profile/views/profile_view.dart';
+import 'package:chatkuy/app/modules/search/views/search_view.dart';
 import 'package:chatkuy/app/routes/app_pages.dart';
+import 'package:chatkuy/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,53 +12,15 @@ import '../controllers/home_controller.dart';
 class HomeView extends GetView<HomeController> {
   final authC = Get.find<AuthController>();
 
+  PageController pageController = PageController();
+  List<Widget> pages = [HomeView(), SearchView(), ProfileView()];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: buildAppBar(),
       body: Column(
         children: [
-          Material(
-            elevation: 5,
-            child: Container(
-              margin: EdgeInsets.only(top: context.mediaQueryPadding.top),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.black38,
-                  ),
-                ),
-              ),
-              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Chatkuy",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Material(
-                    borderRadius: BorderRadius.circular(50),
-                    color: Color(0xFF4B7BEC),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(50),
-                      onTap: () => Get.toNamed(Routes.PROFILE),
-                      child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Icon(
-                          Icons.person,
-                          size: 35,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
           Expanded(
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: controller.chatsStream(authC.user.value.email!),
@@ -77,8 +42,8 @@ class HomeView extends GetView<HomeController> {
                             return data!["status"] == ""
                                 ? ListTile(
                                     contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 20,
-                                      vertical: 5,
+                                      horizontal: kDefaultPadding,
+                                      vertical: kDefaultPadding * 0.75,
                                     ),
                                     onTap: () => controller.goToChatRoom(
                                       "${listDocsChats[index].id}",
@@ -86,7 +51,7 @@ class HomeView extends GetView<HomeController> {
                                       listDocsChats[index]["connection"],
                                     ),
                                     leading: CircleAvatar(
-                                      radius: 30,
+                                      radius: 24,
                                       backgroundColor: Colors.black26,
                                       child: ClipRRect(
                                         borderRadius:
@@ -105,8 +70,8 @@ class HomeView extends GetView<HomeController> {
                                     title: Text(
                                       "${data["name"]}",
                                       style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
                                       ),
                                     ),
                                     trailing: listDocsChats[index]
@@ -114,7 +79,7 @@ class HomeView extends GetView<HomeController> {
                                             0
                                         ? SizedBox()
                                         : Chip(
-                                            backgroundColor: Color(0xFF4B7BEC),
+                                            backgroundColor: kPrimaryColor,
                                             label: Text(
                                               "${listDocsChats[index]["total_unread"]}",
                                               style: TextStyle(
@@ -133,7 +98,7 @@ class HomeView extends GetView<HomeController> {
                                       listDocsChats[index]["connection"],
                                     ),
                                     leading: CircleAvatar(
-                                      radius: 30,
+                                      radius: 24,
                                       backgroundColor: Colors.black26,
                                       child: ClipRRect(
                                         borderRadius:
@@ -152,15 +117,15 @@ class HomeView extends GetView<HomeController> {
                                     title: Text(
                                       "${data["name"]}",
                                       style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
                                       ),
                                     ),
                                     subtitle: Text(
                                       "${data["status"]}",
                                       style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w400,
                                       ),
                                     ),
                                     trailing: listDocsChats[index]
@@ -168,7 +133,7 @@ class HomeView extends GetView<HomeController> {
                                             0
                                         ? SizedBox()
                                         : Chip(
-                                            backgroundColor: Color(0xFF4B7BEC),
+                                            backgroundColor: kPrimaryColor,
                                             label: Text(
                                               "${listDocsChats[index]["total_unread"]}",
                                               style: TextStyle(
@@ -199,8 +164,26 @@ class HomeView extends GetView<HomeController> {
           Icons.search,
           size: 30,
         ),
-        backgroundColor: Color(0xFF4B7BEC),
+        backgroundColor: kPrimaryColor,
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.messenger), label: "Chats"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: "Search Friend",
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+        ],
+      ),
+    );
+  }
+
+  AppBar buildAppBar() {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      title: Text("Chats"),
+      actions: [IconButton(onPressed: () {}, icon: Icon(Icons.info_outline))],
     );
   }
 }

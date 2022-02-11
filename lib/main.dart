@@ -21,37 +21,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Future.delayed(Duration(seconds: 1)),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          // return Obx(
-          //   () => GetMaterialApp(
-          //     title: "Chatkuy",
-          //     initialRoute: authC.isSkipIntro.isTrue
-          //         ? authC.isAuth.isTrue
-          //             ? Routes.HOME
-          //             : Routes.LOGIN
-          //         : Routes.INTRODUCTION,
-          //     getPages: AppPages.routes,
-          //   ),
-          // );
+    return FutureBuilder(builder: (context, snapshot) {
+      // return Obx(
+      //   () => GetMaterialApp(
+      //     title: "Chatkuy",
+      //     debugShowCheckedModeBanner: false,
+      //     theme: lightThemeData(context),
+      //     darkTheme: darkThemeData(context),
+      //     initialRoute: authC.isSkipIntro.isTrue
+      //         ? authC.isAuth.isTrue
+      //             ? Routes.HOME
+      //             : Routes.LOGIN
+      //         : Routes.INTRODUCTION,
+      //     getPages: AppPages.routes,
+      //   ),
+      // );
 
-          return GetMaterialApp(
-            title: "Chatkuy",
-            debugShowCheckedModeBanner: false,
-            theme: lightThemeData(context),
-            darkTheme: darkThemeData(context),
-            initialRoute: Routes.INTRODUCTION,
-            getPages: AppPages.routes,
-          );
-        }
-        return FutureBuilder(
-          future: authC.firstInitialized(),
-          builder: (context, snapshot) => SplashScreen(),
-        );
-      },
-    );
+      return GetMaterialApp(
+        title: "Chatkuy",
+        debugShowCheckedModeBanner: false,
+        theme: lightThemeData(context),
+        darkTheme: darkThemeData(context),
+        initialRoute: Routes.LOGIN,
+        getPages: AppPages.routes,
+      );
+    });
 
     // //one complete, show your applicationId
     // if (snapshot.connectionState == ConnectionState.done) {

@@ -7,13 +7,13 @@ class SplashScreen extends StatelessWidget {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: isDarkMode ? kContentColorDarkTheme : Colors.white,
+        backgroundColor: isDarkMode ? Colors.white : kContentColorLightTheme,
         body: Center(
           child: Container(
             child: Image.asset(
               isDarkMode
-                  ? "assets/logo/logo_light.png"
-                  : "assets/logo/logo_dark.png",
+                  ? "assets/logo/logo_dark.png"
+                  : "assets/logo/logo_light.png",
             ),
           ),
         ),
