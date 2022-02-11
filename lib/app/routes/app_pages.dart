@@ -4,8 +4,6 @@ import '../modules/change_profile/bindings/change_profile_binding.dart';
 import '../modules/change_profile/views/change_profile_view.dart';
 import '../modules/chat_room/bindings/chat_room_binding.dart';
 import '../modules/chat_room/views/chat_room_view.dart';
-import '../modules/dashboard/bindings/dashboard_binding.dart';
-import '../modules/dashboard/views/dashboard_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/introduction/bindings/introduction_binding.dart';
@@ -64,11 +62,6 @@ class AppPages {
       name: _Paths.CHANGE_PROFILE,
       page: () => ChangeProfileView(),
       binding: ChangeProfileBinding(),
-    ),
-    GetPage(
-      name: _Paths.DASHBOARD,
-      page: () => DashboardView(),
-      binding: DashboardBinding(),
     ),
   ];
 }
