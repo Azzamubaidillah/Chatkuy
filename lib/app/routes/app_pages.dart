@@ -1,21 +1,23 @@
 import 'package:get/get.dart';
 
-import 'package:chatkuy/app/modules/change_profile/bindings/change_profile_binding.dart';
-import 'package:chatkuy/app/modules/change_profile/views/change_profile_view.dart';
-import 'package:chatkuy/app/modules/chat_room/bindings/chat_room_binding.dart';
-import 'package:chatkuy/app/modules/chat_room/views/chat_room_view.dart';
-import 'package:chatkuy/app/modules/home/bindings/home_binding.dart';
-import 'package:chatkuy/app/modules/home/views/home_view.dart';
-import 'package:chatkuy/app/modules/introduction/bindings/introduction_binding.dart';
-import 'package:chatkuy/app/modules/introduction/views/introduction_view.dart';
-import 'package:chatkuy/app/modules/login/bindings/login_binding.dart';
-import 'package:chatkuy/app/modules/login/views/login_view.dart';
-import 'package:chatkuy/app/modules/profile/bindings/profile_binding.dart';
-import 'package:chatkuy/app/modules/profile/views/profile_view.dart';
-import 'package:chatkuy/app/modules/search/bindings/search_binding.dart';
-import 'package:chatkuy/app/modules/search/views/search_view.dart';
-import 'package:chatkuy/app/modules/update_status/bindings/update_status_binding.dart';
-import 'package:chatkuy/app/modules/update_status/views/update_status_view.dart';
+import '../modules/change_profile/bindings/change_profile_binding.dart';
+import '../modules/change_profile/views/change_profile_view.dart';
+import '../modules/chat_room/bindings/chat_room_binding.dart';
+import '../modules/chat_room/views/chat_room_view.dart';
+import '../modules/dashboard/bindings/dashboard_binding.dart';
+import '../modules/dashboard/views/dashboard_view.dart';
+import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/views/home_view.dart';
+import '../modules/introduction/bindings/introduction_binding.dart';
+import '../modules/introduction/views/introduction_view.dart';
+import '../modules/login/bindings/login_binding.dart';
+import '../modules/login/views/login_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
+import '../modules/search/bindings/search_binding.dart';
+import '../modules/search/views/search_view.dart';
+import '../modules/update_status/bindings/update_status_binding.dart';
+import '../modules/update_status/views/update_status_view.dart';
 
 part 'app_routes.dart';
 
@@ -62,6 +64,11 @@ class AppPages {
       name: _Paths.CHANGE_PROFILE,
       page: () => ChangeProfileView(),
       binding: ChangeProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.DASHBOARD,
+      page: () => DashboardView(),
+      binding: DashboardBinding(),
     ),
   ];
 }

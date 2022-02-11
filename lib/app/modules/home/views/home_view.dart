@@ -1,6 +1,4 @@
 import 'package:chatkuy/app/controllers/auth_controller.dart';
-import 'package:chatkuy/app/modules/profile/views/profile_view.dart';
-import 'package:chatkuy/app/modules/search/views/search_view.dart';
 import 'package:chatkuy/app/routes/app_pages.dart';
 import 'package:chatkuy/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,9 +9,6 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   final authC = Get.find<AuthController>();
-
-  PageController pageController = PageController();
-  List<Widget> pages = [HomeView(), SearchView(), ProfileView()];
 
   @override
   Widget build(BuildContext context) {
@@ -165,16 +160,6 @@ class HomeView extends GetView<HomeController> {
           size: 30,
         ),
         backgroundColor: kPrimaryColor,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.messenger), label: "Chats"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: "Search Friend",
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-        ],
       ),
     );
   }
