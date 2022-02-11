@@ -1,9 +1,8 @@
 import 'package:chatkuy/app/controllers/auth_controller.dart';
-import 'package:chatkuy/app/modules/profile/views/profile_view.dart';
-import 'package:chatkuy/app/modules/search/views/search_view.dart';
 import 'package:chatkuy/app/routes/app_pages.dart';
 import 'package:chatkuy/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,9 +10,6 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   final authC = Get.find<AuthController>();
-
-  PageController pageController = PageController();
-  List<Widget> pages = [HomeView(), SearchView(), ProfileView()];
 
   @override
   Widget build(BuildContext context) {
@@ -121,13 +117,14 @@ class HomeView extends GetView<HomeController> {
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
-                                    subtitle: Text(
-                                      "${data["status"]}",
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
+                                    subtitle: Text("${data["status"]}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle2!
+                                            .copyWith(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w300,
+                                            )),
                                     trailing: listDocsChats[index]
                                                 ["total_unread"] ==
                                             0
@@ -161,20 +158,11 @@ class HomeView extends GetView<HomeController> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed(Routes.SEARCH),
         child: Icon(
-          Icons.search,
+          CupertinoIcons.search,
+          color: Colors.white,
           size: 30,
         ),
         backgroundColor: kPrimaryColor,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.messenger), label: "Chats"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: "Search Friend",
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-        ],
       ),
     );
   }
@@ -183,7 +171,11 @@ class HomeView extends GetView<HomeController> {
     return AppBar(
       automaticallyImplyLeading: false,
       title: Text("Chats"),
-      actions: [IconButton(onPressed: () {}, icon: Icon(Icons.info_outline))],
+      actions: [
+        IconButton(
+            onPressed: () => Get.toNamed(Routes.PROFILE),
+            icon: Icon(CupertinoIcons.person))
+      ],
     );
   }
 }

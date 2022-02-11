@@ -3,8 +3,6 @@ import 'package:chatkuy/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:introduction_screen/introduction_screen.dart';
-import 'package:lottie/lottie.dart';
 
 import '../controllers/introduction_controller.dart';
 

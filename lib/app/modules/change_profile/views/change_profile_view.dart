@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:avatar_glow/avatar_glow.dart';
 import 'package:chatkuy/app/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 
@@ -41,27 +39,22 @@ class ChangeProfileView extends GetView<ChangeProfileController> {
         padding: const EdgeInsets.all(20),
         child: ListView(
           children: [
-            AvatarGlow(
-              endRadius: 75,
-              glowColor: Colors.black,
-              duration: Duration(seconds: 2),
-              child: Container(
-                margin: EdgeInsets.all(15),
-                width: 120,
-                height: 120,
-                child: Obx(
-                  () => ClipRRect(
-                    borderRadius: BorderRadius.circular(200),
-                    child: authC.user.value.photoUrl! == "noimage"
-                        ? Image.asset(
-                            "assets/logo/noimage.png",
-                            fit: BoxFit.cover,
-                          )
-                        : Image.network(
-                            authC.user.value.photoUrl!,
-                            fit: BoxFit.cover,
-                          ),
-                  ),
+            Container(
+              margin: EdgeInsets.all(15),
+              width: 120,
+              height: 120,
+              child: Obx(
+                () => ClipRRect(
+                  borderRadius: BorderRadius.circular(200),
+                  child: authC.user.value.photoUrl! == "noimage"
+                      ? Image.asset(
+                          "assets/logo/noimage.png",
+                          fit: BoxFit.cover,
+                        )
+                      : Image.network(
+                          authC.user.value.photoUrl!,
+                          fit: BoxFit.cover,
+                        ),
                 ),
               ),
             ),
