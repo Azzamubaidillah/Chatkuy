@@ -1,12 +1,21 @@
+import 'package:chatkuy/constants.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Image.asset("assets/logo/logo_light.png"),
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: isDarkMode ? kContentColorDarkTheme : Colors.white,
+        body: Center(
+          child: Container(
+            child: Image.asset(
+              isDarkMode
+                  ? "assets/logo/logo_light.png"
+                  : "assets/logo/logo_dark.png",
+            ),
+          ),
         ),
       ),
     );
