@@ -25,7 +25,7 @@ class ProfileView extends GetView<ProfileController> {
               children: [
                 IconButton(
                   onPressed: () => Get.back(),
-                  icon: Icon(LineAwesomeIcons.arrow_left,
+                  icon: Icon(LineAwesomeIcons.angle_left,
                       size: kDefaultPadding * 1.3),
                 ),
                 Container(
