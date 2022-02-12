@@ -189,12 +189,12 @@ class ChangeProfileView extends GetView<ChangeProfileController> {
                                 ),
                               ],
                             )
-                          : Text("no image"),
+                          : Text("Change Photo Profile"),
                     ),
                     TextButton(
                       onPressed: () => controller.selectImage(),
                       child: Text(
-                        "chosen",
+                        "choose",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),

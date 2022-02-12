@@ -184,8 +184,6 @@ class ChatRoomView extends GetView<ChatRoomController> {
                             Get.arguments as Map<String, dynamic>,
                             controller.chatC.text,
                           ),
-                          cursorHeight: 15,
-                          style: TextStyle(height: 0.6),
                           decoration: InputDecoration(
                             prefixIcon: IconButton(
                               onPressed: () {
@@ -198,7 +196,7 @@ class ChatRoomView extends GetView<ChatRoomController> {
                           ),
                         ),
                         decoration: BoxDecoration(
-                          color: kPrimaryColor.withOpacity(0.05),
+                          color: kPrimaryColor.withOpacity(0.06),
                           borderRadius: BorderRadius.circular(40),
                         ),
                       ),
@@ -239,17 +237,17 @@ class ChatRoomView extends GetView<ChatRoomController> {
                           controller.deleteEmoji();
                         },
                         config: Config(
-                          backspaceColor: Color(0xFFB71C1C),
+                          backspaceColor: kPrimaryColor,
                           columns: 7,
                           emojiSizeMax: 32.0,
                           verticalSpacing: 0,
                           horizontalSpacing: 0,
                           initCategory: Category.RECENT,
                           bgColor: Color(0xFFF2F2F2),
-                          indicatorColor: Color(0xFFB71C1C),
+                          indicatorColor: kPrimaryColor,
                           iconColor: Colors.grey,
-                          iconColorSelected: Color(0xFFB71C1C),
-                          progressIndicatorColor: Color(0xFFB71C1C),
+                          iconColorSelected: kPrimaryColor,
+                          progressIndicatorColor: kPrimaryColor,
                           showRecentsTab: true,
                           recentsLimit: 28,
                           noRecentsText: "No Recents",
