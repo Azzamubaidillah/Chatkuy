@@ -16,7 +16,6 @@ class ChangeProfileView extends GetView<ChangeProfileController> {
     controller.emailC.text = authC.user.value.email!;
     controller.nameC.text = authC.user.value.name!;
     controller.statusC.text = authC.user.value.status!;
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       // onPressed: () => Get.back(),
       // onPressed: () {
@@ -224,7 +223,7 @@ class ChangeProfileView extends GetView<ChangeProfileController> {
                   style: ElevatedButton.styleFrom(
                       primary: kPrimaryColor,
                       padding: EdgeInsets.symmetric(
-                        vertical: 12,
+                        vertical: 15,
                       ),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30))),
