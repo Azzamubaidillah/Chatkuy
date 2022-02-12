@@ -146,60 +146,14 @@ class ChatRoomView extends GetView<ChatRoomController> {
                       return ListView.builder(
                         controller: controller.scrollC,
                         itemCount: alldata.length,
-                        itemBuilder: (context, index) {
-                          if (index == 0) {
-                            return Column(
-                              children: [
-                                SizedBox(height: 10),
-                                Text(
-                                  "${alldata[index]["groupTime"]}",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                ItemChat(
-                                  msg: "${alldata[index]["msg"]}",
-                                  isSender: alldata[index]["pengirim"] ==
-                                          authC.user.value.email!
-                                      ? true
-                                      : false,
-                                  time: "${alldata[index]["time"]}",
-                                ),
-                              ],
-                            );
-                          } else {
-                            if (alldata[index]["groupTime"] ==
-                                alldata[index - 1]["groupTime"]) {
-                              return ItemChat(
-                                msg: "${alldata[index]["msg"]}",
-                                isSender: alldata[index]["pengirim"] ==
-                                        authC.user.value.email!
-                                    ? true
-                                    : false,
-                                time: "${alldata[index]["time"]}",
-                              );
-                            } else {
-                              return Column(
-                                children: [
-                                  Text(
-                                    "${alldata[index]["groupTime"]}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  ItemChat(
-                                    msg: "${alldata[index]["msg"]}",
-                                    isSender: alldata[index]["pengirim"] ==
-                                            authC.user.value.email!
-                                        ? true
-                                        : false,
-                                    time: "${alldata[index]["time"]}",
-                                  ),
-                                ],
-                              );
-                            }
-                          }
-                        },
+                        itemBuilder: (context, index) => ItemChat(
+                          msg: "${alldata[index]["msg"]}",
+                          isSender: alldata[index]["pengirim"] ==
+                                  authC.user.value.email!
+                              ? true
+                              : false,
+                          time: "${alldata[index]["time"]}",
+                        ),
                       );
                     }
                     return Center(child: CircularProgressIndicator());
@@ -340,24 +294,15 @@ class ItemChat extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: kPrimaryColor.withOpacity(isSender ? 1 : 0.1),
-              borderRadius: isSender
-                  ? BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                      bottomLeft: Radius.circular(15),
-                    )
-                  : BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
-                    ),
-            ),
-            padding: EdgeInsets.all(15),
+                color: kPrimaryColor.withOpacity(isSender ? 1 : 0.1),
+                borderRadius: BorderRadius.circular(30)),
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 17),
             child: Text(
               "$msg",
               style: TextStyle(
-                color: Colors.white,
+                color: isSender
+                    ? Colors.white
+                    : Theme.of(context).textTheme.bodyText1!.color,
               ),
             ),
           ),
