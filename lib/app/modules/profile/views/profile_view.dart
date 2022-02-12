@@ -100,7 +100,7 @@ class ProfileView extends GetView<ProfileController> {
                     isDarkMode: isDarkMode,
                     text: "Info",
                     icon: Icon(LineAwesomeIcons.question_circle),
-                    route: () => Get.toNamed(Routes.UPDATE_STATUS),
+                    route: () => Get.toNamed(Routes.INFO),
                   ),
                   ProfileListView(
                     authC: authC,
