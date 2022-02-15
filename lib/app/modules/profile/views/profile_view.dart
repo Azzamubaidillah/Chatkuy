@@ -25,7 +25,7 @@ class ProfileView extends GetView<ProfileController> {
               children: [
                 IconButton(
                   onPressed: () => Get.back(),
-                  icon: Icon(LineAwesomeIcons.arrow_left,
+                  icon: Icon(LineAwesomeIcons.angle_left,
                       size: kDefaultPadding * 1.3),
                 ),
                 Container(
@@ -100,7 +100,7 @@ class ProfileView extends GetView<ProfileController> {
                     isDarkMode: isDarkMode,
                     text: "Info",
                     icon: Icon(LineAwesomeIcons.question_circle),
-                    route: () => Get.toNamed(Routes.UPDATE_STATUS),
+                    route: () => Get.toNamed(Routes.INFO),
                   ),
                   ProfileListView(
                     authC: authC,

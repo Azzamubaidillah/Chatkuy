@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:chatkuy/app/controllers/auth_controller.dart';
+import 'package:chatkuy/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../controllers/chat_room_controller.dart';
 
@@ -16,7 +18,6 @@ class ChatRoomView extends GetView<ChatRoomController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red[900],
         leadingWidth: 100,
         leading: InkWell(
           onTap: () => Get.back(),
@@ -25,10 +26,10 @@ class ChatRoomView extends GetView<ChatRoomController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(width: 5),
-              Icon(Icons.arrow_back),
+              Icon(LineAwesomeIcons.angle_left),
               SizedBox(width: 5),
               CircleAvatar(
-                radius: 25,
+                radius: 20,
                 backgroundColor: Colors.grey,
                 child: StreamBuilder<DocumentSnapshot<Object?>>(
                   stream: controller.streamFriendData(
@@ -83,14 +84,14 @@ class ChatRoomView extends GetView<ChatRoomController> {
                   Text(
                     dataFriend["name"],
                     style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                   Text(
                     dataFriend["status"],
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                     ),
                   ),
                 ],
@@ -103,14 +104,14 @@ class ChatRoomView extends GetView<ChatRoomController> {
                 Text(
                   'Loading...',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
                   'Loading...',
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
                   ),
                 ),
               ],
@@ -145,60 +146,14 @@ class ChatRoomView extends GetView<ChatRoomController> {
                       return ListView.builder(
                         controller: controller.scrollC,
                         itemCount: alldata.length,
-                        itemBuilder: (context, index) {
-                          if (index == 0) {
-                            return Column(
-                              children: [
-                                SizedBox(height: 10),
-                                Text(
-                                  "${alldata[index]["groupTime"]}",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                ItemChat(
-                                  msg: "${alldata[index]["msg"]}",
-                                  isSender: alldata[index]["pengirim"] ==
-                                          authC.user.value.email!
-                                      ? true
-                                      : false,
-                                  time: "${alldata[index]["time"]}",
-                                ),
-                              ],
-                            );
-                          } else {
-                            if (alldata[index]["groupTime"] ==
-                                alldata[index - 1]["groupTime"]) {
-                              return ItemChat(
-                                msg: "${alldata[index]["msg"]}",
-                                isSender: alldata[index]["pengirim"] ==
-                                        authC.user.value.email!
-                                    ? true
-                                    : false,
-                                time: "${alldata[index]["time"]}",
-                              );
-                            } else {
-                              return Column(
-                                children: [
-                                  Text(
-                                    "${alldata[index]["groupTime"]}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  ItemChat(
-                                    msg: "${alldata[index]["msg"]}",
-                                    isSender: alldata[index]["pengirim"] ==
-                                            authC.user.value.email!
-                                        ? true
-                                        : false,
-                                    time: "${alldata[index]["time"]}",
-                                  ),
-                                ],
-                              );
-                            }
-                          }
-                        },
+                        itemBuilder: (context, index) => ItemChat(
+                          msg: "${alldata[index]["msg"]}",
+                          isSender: alldata[index]["pengirim"] ==
+                                  authC.user.value.email!
+                              ? true
+                              : false,
+                          time: "${alldata[index]["time"]}",
+                        ),
                       );
                     }
                     return Center(child: CircularProgressIndicator());
@@ -214,56 +169,60 @@ class ChatRoomView extends GetView<ChatRoomController> {
               ),
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               width: Get.width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Container(
-                      child: TextField(
-                        autocorrect: false,
-                        controller: controller.chatC,
-                        focusNode: controller.focusNode,
-                        onEditingComplete: () => controller.newChat(
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        child: TextField(
+                          autocorrect: false,
+                          controller: controller.chatC,
+                          focusNode: controller.focusNode,
+                          onEditingComplete: () => controller.newChat(
+                            authC.user.value.email!,
+                            Get.arguments as Map<String, dynamic>,
+                            controller.chatC.text,
+                          ),
+                          decoration: InputDecoration(
+                            prefixIcon: IconButton(
+                              onPressed: () {
+                                controller.focusNode.unfocus();
+                                controller.isShowEmoji.toggle();
+                              },
+                              icon: Icon(Icons.emoji_emotions_outlined),
+                            ),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          color: kPrimaryColor.withOpacity(0.06),
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Material(
+                      borderRadius: BorderRadius.circular(100),
+                      color: kPrimaryColor,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(100),
+                        onTap: () => controller.newChat(
                           authC.user.value.email!,
                           Get.arguments as Map<String, dynamic>,
                           controller.chatC.text,
                         ),
-                        decoration: InputDecoration(
-                          prefixIcon: IconButton(
-                            onPressed: () {
-                              controller.focusNode.unfocus();
-                              controller.isShowEmoji.toggle();
-                            },
-                            icon: Icon(Icons.emoji_emotions_outlined),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(100),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Icon(
+                            LineAwesomeIcons.paper_plane,
+                            color: Colors.white,
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(width: 10),
-                  Material(
-                    borderRadius: BorderRadius.circular(100),
-                    color: Colors.red[900],
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(100),
-                      onTap: () => controller.newChat(
-                        authC.user.value.email!,
-                        Get.arguments as Map<String, dynamic>,
-                        controller.chatC.text,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Icon(
-                          Icons.send,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Obx(
@@ -278,17 +237,17 @@ class ChatRoomView extends GetView<ChatRoomController> {
                           controller.deleteEmoji();
                         },
                         config: Config(
-                          backspaceColor: Color(0xFFB71C1C),
+                          backspaceColor: kPrimaryColor,
                           columns: 7,
                           emojiSizeMax: 32.0,
                           verticalSpacing: 0,
                           horizontalSpacing: 0,
                           initCategory: Category.RECENT,
                           bgColor: Color(0xFFF2F2F2),
-                          indicatorColor: Color(0xFFB71C1C),
+                          indicatorColor: kPrimaryColor,
                           iconColor: Colors.grey,
-                          iconColorSelected: Color(0xFFB71C1C),
-                          progressIndicatorColor: Color(0xFFB71C1C),
+                          iconColorSelected: kPrimaryColor,
+                          progressIndicatorColor: kPrimaryColor,
                           showRecentsTab: true,
                           recentsLimit: 28,
                           noRecentsText: "No Recents",
@@ -333,24 +292,15 @@ class ItemChat extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.red[900],
-              borderRadius: isSender
-                  ? BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                      bottomLeft: Radius.circular(15),
-                    )
-                  : BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
-                    ),
-            ),
-            padding: EdgeInsets.all(15),
+                color: kPrimaryColor.withOpacity(isSender ? 1 : 0.1),
+                borderRadius: BorderRadius.circular(30)),
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 17),
             child: Text(
               "$msg",
               style: TextStyle(
-                color: Colors.white,
+                color: isSender
+                    ? Colors.white
+                    : Theme.of(context).textTheme.bodyText1!.color,
               ),
             ),
           ),

@@ -6,6 +6,8 @@ import '../modules/chat_room/bindings/chat_room_binding.dart';
 import '../modules/chat_room/views/chat_room_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/info/bindings/info_binding.dart';
+import '../modules/info/views/info_view.dart';
 import '../modules/introduction/bindings/introduction_binding.dart';
 import '../modules/introduction/views/introduction_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -62,6 +64,11 @@ class AppPages {
       name: _Paths.CHANGE_PROFILE,
       page: () => ChangeProfileView(),
       binding: ChangeProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.INFO,
+      page: () => InfoView(),
+      binding: InfoBinding(),
     ),
   ];
 }

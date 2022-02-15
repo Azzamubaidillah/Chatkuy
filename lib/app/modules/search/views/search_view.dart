@@ -1,7 +1,9 @@
 import 'package:chatkuy/app/controllers/auth_controller.dart';
 import 'package:chatkuy/app/routes/app_pages.dart';
+import 'package:chatkuy/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 
 import '../controllers/search_controller.dart';
@@ -13,12 +15,10 @@ class SearchView extends GetView<SearchController> {
     return Scaffold(
       appBar: PreferredSize(
         child: AppBar(
-          backgroundColor: Color(0xFF4B7BEC),
           title: Text('Search'),
-          centerTitle: true,
           leading: IconButton(
             onPressed: () => Get.back(),
-            icon: Icon(Icons.arrow_back),
+            icon: Icon(LineAwesomeIcons.angle_left),
           ),
           flexibleSpace: Padding(
             padding: const EdgeInsets.fromLTRB(30, 50, 30, 20),
@@ -30,9 +30,7 @@ class SearchView extends GetView<SearchController> {
                   authC.user.value.email!,
                 ),
                 controller: controller.searchC,
-                cursorColor: Color(0xFF4B7BEC),
                 decoration: InputDecoration(
-                  fillColor: Colors.white,
                   filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(50),
@@ -51,14 +49,13 @@ class SearchView extends GetView<SearchController> {
                   hintText: "Search new friend here..",
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 30,
-                    vertical: 20,
                   ),
                   suffixIcon: InkWell(
                     borderRadius: BorderRadius.circular(50),
                     onTap: () {},
                     child: Icon(
                       Icons.search,
-                      color: Color(0xFF4B7BEC),
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -74,7 +71,7 @@ class SearchView extends GetView<SearchController> {
                 child: Container(
                   width: Get.width * 0.7,
                   height: Get.width * 0.7,
-                  child: Lottie.asset("assets/lottie/empty.json"),
+                  child: Image.asset("assets/image/search.png"),
                 ),
               )
             : ListView.builder(
