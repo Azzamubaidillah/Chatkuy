@@ -1,8 +1,8 @@
-# chatkuy
+# Chatkuy
 
-A new Flutter project.
+A chat application mobile apps made with Flutter, GetX, and Firebase
 
-## Getting Started
+## This is how it looks
 
 This project is a starting point for a Flutter application.
 
